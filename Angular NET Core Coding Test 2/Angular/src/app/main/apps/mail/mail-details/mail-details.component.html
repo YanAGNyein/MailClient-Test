@@ -1,0 +1,153 @@
+<div *ngIf="!mail" fxLayout="column" fxLayoutAlign="center center" fxFlex>
+    <mat-icon
+        class="s-128 mb-16 select-message-icon hint-text"
+        [@animate]="{ value: '*', params: { delay: '300ms', scale: '0.2' } }"
+    >
+        email
+    </mat-icon>
+    <span
+        class="select-message-text hint-text"
+        [@animate]="{ value: '*', params: { delay: '400ms' } }"
+    >
+        <span>{{ "MAIL.SELECT_A_MESSAGE_TO_READ" | translate }}</span>
+    </span>
+</div>
+
+<div *ngIf="mail">
+    <div
+        class="mail-header"
+        fxLayout="row"
+        fxLayoutAlign="space-between center"
+    >
+        <div>
+            <div class="subject">{{ mail.subject }}</div>
+
+            <div class="labels mt-8" fxLayout="row wrap">
+                <div
+                    class="label"
+                    fxLayout="row"
+                    fxLayoutAlign="start center"
+                >
+                    <div
+                        class="label-color"
+                        [ngStyle]="{
+                            'background-color':
+                                labels | getById: mail.label:'color'
+                        }"
+                    ></div>
+                    <div class="label-title">
+                        {{ labels | getById: mail.label:"title" }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="mail-content">
+        <div class="info" fxLayout="row" fxLayoutAlign="space-between start">
+            <div fxFlex fxLayout="column" fxLayoutAlign="start start">
+                <div fxLayout="row" fxLayoutAlign="start start">
+
+                    <!-- //XL 20191112 add ngx-avatar -->
+                    <ngx-avatar
+                        class="avatar"
+                        value="HM"
+                        [size]="36"
+                        name="{{ mail?.sendingStaffName[0] }}"
+                    >
+                    </ngx-avatar>
+                    <div fxLayout="column" fxLayoutAlign="start start">
+                        <div class="name">
+                            {{ mail.sendingStaffName }}
+                        </div>
+
+                        <div
+                            class="to"
+                            fxLayout="row"
+                            fxLayoutAlign="start center"
+                        >
+                            <div class="to-text">to</div>
+                            <div>{{ mail.receivingStaffName }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="toggle-details" (click)="showDetails = !showDetails">
+                    <span *ngIf="!showDetails">Show Details</span>
+                    <span *ngIf="showDetails">Hide Details</span>
+                </a>
+
+                <div
+                    *ngIf="showDetails"
+                    class="details"
+                    fxLayout="row"
+                    fxLayoutAlign="start start"
+                >
+                    <div fxLayout="column">
+                        <span class="title">From:</span>
+                        <span class="title">To:</span>
+                        <span class="title">Date:</span>
+                        <div *ngIf="mail.folder == 0">
+                            <span class="title">Sent Status:</span>
+                        </div>
+                    </div>
+
+                    <div fxLayout="column">
+                        <span class="detail">{{ mail.sendingStaffEmail }}</span>
+                        <span class="detail">{{ mail.receivingStaffEmail }}</span>
+                        <span class="detail">{{ mail.sentTime.toLocaleString() }}</span>
+                        <div *ngIf="mail.folder == 0">
+                            <span class="detail" *ngIf="mail.sentSuccessToSMTPServer == true"><font color="green">Success</font></span>
+                            <span class="detail" *ngIf="mail.sentSuccessToSMTPServer == false"><font color="red">Failed</font></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <button
+                mat-icon-button
+                [matMenuTriggerFor]="moreMenu"
+                aria-label="More"
+                (click)="$event.stopPropagation()"
+            >
+                <mat-icon>more_vert</mat-icon>
+            </button> -->
+
+            <mat-menu #moreMenu="matMenu">
+                <button mat-menu-item aria-label="Reply">
+                    <mat-icon>reply</mat-icon>
+                    <span>Reply</span>
+                </button>
+
+                <button mat-menu-item aria-label="Forward">
+                    <mat-icon>forward</mat-icon>
+                    <span>Forward</span>
+                </button>
+
+                <button mat-menu-item aria-label="Print">
+                    <mat-icon>print</mat-icon>
+                    <span>Print</span>
+                </button>
+            </mat-menu>
+        </div>
+
+        <div [innerHTML]="mail.message"></div>
+
+        <!-- can only resend mails in Sent folder -->
+        <br />
+        <div *ngIf="mail.folder == 0">
+
+            <button 
+                mat-raised-button
+                color="warn"
+                class="save-button"
+                aria-label="Resend Email"
+                (click)="resendEmail(event, mail)"
+            >
+                Resend
+            </button>
+
+        </div>
+    </div>
+</div>

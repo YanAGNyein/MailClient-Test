@@ -1,0 +1,27 @@
+button{
+font-size: 14px;
+font-family: Arial, Muli, Helvetica Neue, sans-serif
+}  
+input{
+    font-size: 13px;
+}
+.material.ngx-datatable{
+    font-family: "Arial";
+    font-size: 13px;
+    overflow-x: hidden;
+   .datatable-header{
+       font-weight: bold;
+       overflow: visible;
+      }
+}
+.material.ngx-datatable:focus-within{
+        overflow-x: auto;
+}
+.mat-checkbox{
+    font-size: 13px;
+    font-family: "Arial";
+}
+.mat-input-element.mat-form-field-autofill-control
+{
+ font-size: 13px;
+}

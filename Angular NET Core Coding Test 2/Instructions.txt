@@ -1,0 +1,33 @@
+Background:
+There are 2 modules in this applicationn, Login and Messaging modules.
+
+The Messaging module contains the list of emails sent out by the logged in user (Inbox) and received from other users (Sent).
+There is a pagination function in displaying the list of emails in "Inbox" & "Sent" (refer to MessagingModule_WithPagination.png).
+When user clicks on a page number in the UI, the backend API should perform the retrieval of the appropriate records.
+The pagination function is partially complete.
+
+
+
+
+Tasks:
+1. Complete the implementation of the pagination function in Messagaing module.
+
+2. Suggest relevant improvements on the frontend and backend code. Suggestions can be on the code structure, database design, overall architecture, etc.
+Do explain why you suggest the improvements.
+
+3. Implement at least 1 frontend and 1 backend improvements you have suggested in Task 2. Do indicate which improvements have been implemented.
+
+
+
+
+Files provided:
+1. Angular 8 frontend code (recommended to run in VS Code)
+2. .NET Core 3.1 backend code (recommended to run in Visual Studio)
+3. MS SQL Database schema and data script (with over 1,000 mails data)
+
+
+
+
+Login details:
+username: hello@test.com
+password: test

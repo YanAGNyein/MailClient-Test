@@ -1,0 +1,67 @@
+<div fxLayout="row" fxLayoutAlign="start center">
+    <!-- <mat-checkbox [(ngModel)]="selected" (ngModelChange)="onSelectedChange()"
+                  (click)="$event.stopPropagation();"></mat-checkbox> -->
+
+    <div class="info" fxFlex FlexLayout="column">
+        <div class="row-1" fxLayout="row" fxLayoutAlign="start center">
+            <div
+                class="name"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                fxFlex
+            >
+                <ngx-avatar
+                    class="avatar"
+                    value="HM"
+                    [size]="36"
+                    name="{{ mail?.sendingStaffName[0] }}"
+                >
+                </ngx-avatar>
+                <span class="text-truncate" *ngIf="mail?.sendingStaffName">{{
+                    mail.sendingStaffName
+                }}</span>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <div *ngIf="mail.folder == 0">
+                    <div *ngIf="mail.sentSuccessToSMTPServer == true">Email Status: <font color="green">Success</font></div>
+                    <div *ngIf="mail.sentSuccessToSMTPServer == false">Email Status: <font color="red">Failed</font></div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="time">{{ mail.sentTime.toLocaleString() }}</div>
+            </div>
+        </div>
+
+        <div class="row-2" fxLayout="row" fxLayoutAlign="start center">
+            <div fxLayout="column" fxLayoutAlign="start start">
+                <div class="subject text-truncate">
+                    {{ mail.subject }}
+                </div>
+
+                <div class="message text-truncate" style="text-indent: 2em;" *ngIf="mail?.message">
+                    {{ mail.message | htmlToPlaintext | spaceFormattingToPlaintext | slice: 0:100
+                    }}{{ mail.message.length > 100 ? "..." : "" }}
+                </div>
+
+                <div class="labels" fxLayout="row wrap" fxHide fxShow.gt-sm>
+                    <div
+                        class="label"
+                        fxLayout="row"
+                        fxLayoutAlign="start center"
+                    >
+                        <div
+                            class="label-color"
+                            [ngStyle]="{
+                                'background-color':
+                                    labels | getById: mail.label:'color'
+                            }"
+                        ></div>
+                        <div class="label-title">
+                            {{ labels | getById: mail.label:"title" }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

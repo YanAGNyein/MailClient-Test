@@ -1,0 +1,41 @@
+@mixin login-2-theme($theme) {
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+    $accent: map-get($theme, accent);
+    $is-dark: map-get($theme, is-dark);
+
+    login-2 {
+        #login {
+            #login-intro {
+                color: white;
+            }
+
+            #login-form-wrapper {
+                @if ($is-dark) {
+                    background: mat-color($fuse-navy, 600);
+                } @else {
+                    //GS remove color background in desktop
+                    //background: map-get($background, card);
+                    background: none;
+                }
+                //GS remove color background in mobile
+                @include media-breakpoint("xs") {
+                    background: none;
+                }
+
+                #login-form {
+                    .separator {
+                        color: map-get($foreground, divider);
+
+                        .text {
+                            &:before,
+                            &:after {
+                                border-top-color: map-get($foreground, divider);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

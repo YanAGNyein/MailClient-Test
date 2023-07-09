@@ -1,0 +1,16 @@
+// Import Fuse core library
+@import "@fuse/scss/core";
+
+// Import app.theme.scss
+@import "app/app.theme";
+
+@import "assets/scss/material.overrides.scss";
+
+@import "assets/scss/fuse.overrides.scss";
+
+//GS 20210208 saa-40 - reject section
+div.reject {
+    padding: 18px; 
+    border-radius: 0.5cm; 
+    border: 2px solid red;
+}
