@@ -19,11 +19,11 @@ namespace WebApi.Helpers
                 pageSize = result.maxLimit;
             }
 
-            result.CurrentPage = page;
-            result.PageSize = pageSize;
-            result.RowCount = query.Count();            
+            result.PageNumber = page;
+            result.RowsOfPage = pageSize;
+            result.TotalRows = query.Count();            
 
-            var pageCount = (double)result.RowCount / pageSize;
+            var pageCount = (double)result.TotalRows / pageSize;
             result.PageCount = (int)Math.Ceiling(pageCount);
         
             var skip = (page - 1) * pageSize;     
@@ -35,21 +35,21 @@ namespace WebApi.Helpers
 
     public abstract class PagedResultBase
     {
-        public int CurrentPage { get; set; } 
+        public int PageNumber { get; set; } 
         public int PageCount { get; set; } = 1;
-        public int PageSize { get; set; } = 50;         
-        public int RowCount { get; set; }
+        public int RowsOfPage { get; set; } = 10;         
+        public int TotalRows { get; set; }
         public int maxLimit = 100;
     
         public int FirstRowOnPage
         {
     
-            get { return (CurrentPage - 1) * PageSize + 1; }
+            get { return (PageNumber - 1) * RowsOfPage + 1; }
         }
     
         public int LastRowOnPage
         {
-            get { return Math.Min(CurrentPage * PageSize, RowCount); }
+            get { return Math.Min(PageNumber * RowsOfPage, TotalRows); }
         }
     }
 

@@ -35,8 +35,9 @@ export class AuthenticationService {
     }
 
     login(loginname, password) {
-         loginname = this.cryptoService.EncryptInput1(loginname);
-         password = this.cryptoService.EncryptInput1(password);
+        // Commented for failed login
+        //  loginname = this.cryptoService.EncryptInput1(loginname);
+        //  password = this.cryptoService.EncryptInput1(password);
         
         return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { loginname, password })
             .pipe(

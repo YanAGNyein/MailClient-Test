@@ -19,6 +19,7 @@ using Microsoft.Win32.SafeHandles;
 using System.Runtime.InteropServices;
 using Autofac.Util;
 using BCryptNet = BCrypt.Net.BCrypt;
+using Microsoft.Extensions.Logging;
 
 namespace WebApi.Controllers
 {
@@ -27,6 +28,8 @@ namespace WebApi.Controllers
     [Route("[controller]")]
     public class UsersController : ControllerBase, IDisposable
     {
+        // Add logger
+        private readonly ILogger<UsersController> _logger;
         // Flag: Has Dispose already been called?
         bool disposed = false;
         // Instantiate a SafeHandle instance.
@@ -43,12 +46,14 @@ namespace WebApi.Controllers
         private const string TOGGLECOLS_REPORTS_ASSETDETAILS = "Reports_AssetDetails";
 
         public UsersController(
+            ILogger<UsersController> logger,
             IUserService userService,
             IMailService mailService,
             IMapper mapper,
             IOptions<AppSettings> appSettings,
             DataContext context)
         {
+            _logger = logger;
             _userService = userService;
             _mailService = mailService;
             _mapper = mapper;
@@ -92,8 +97,9 @@ namespace WebApi.Controllers
             DateTime now = DateTime.Now;
             Guid sessionID;
 
-            model.LoginName = Helpers.SecurityFunction.DecryptAES1(model.LoginName, "AAECAwQFBgcICQoLDA0ODw==");
-            model.Password = Helpers.SecurityFunction.DecryptAES1(model.Password, "AAECAwQFBgcICQoLDA0ODw==");
+            // Commented for these codes which are always return "" value after decrypted
+            // model.LoginName = Helpers.SecurityFunction.DecryptAES1(model.LoginName, "AAECAwQFBgcICQoLDA0ODw==");
+            // model.Password = Helpers.SecurityFunction.DecryptAES1(model.Password, "AAECAwQFBgcICQoLDA0ODw==");
 
             // Check if the LoginName is an email, if email, call the AMS authenticate service
             // If not email call the LDAP authenticate service

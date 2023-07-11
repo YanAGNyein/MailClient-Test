@@ -143,11 +143,14 @@ namespace WebApi.Services
             var userIdParam = new SqlParameter("@UserID", userID);
             var folderIdParam = new SqlParameter("FolderID", folderID);
             
-            // Get Sent Mail
-            var queryResult = _context.Mail.Include(g => g.SendingUser).Include(g => g.ReceivingUser)
+            IQueryable<Mail> queryResult = null;
+            if (folderID == 0)
+            {
+                // Get Sent Mail
+                queryResult = _context.Mail.Include(g => g.SendingUser).Include(g => g.ReceivingUser)
                                 .Where(g => g.SendingUserID == userID);
-
-            if (folderID != 0)
+            }
+            else 
             {
                 // Get Inbox Mail
                 queryResult = _context.Mail.Include(g => g.SendingUser).Include(g => g.ReceivingUser)

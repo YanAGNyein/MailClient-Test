@@ -164,12 +164,12 @@ export class MailListComponent implements OnInit, OnDestroy
 
     pageChangeEvent(event: number)
     {
-            const pageNumber = event;
-            this._mailService.getMailsByFolder(this._activatedRoute.snapshot.params.folderHandle,pageNumber );
-             this.config = {
+            // const pageNumber = event; // No need and shouldn't "const" for this variable
+            this._mailService.getMailsByFolder(this._activatedRoute.snapshot.params.folderHandle,event);
+            this.config = {
                 itemsPerPage: this.rowsOfPage,
-                currentPage: pageNumber,
+                currentPage: event,
                 totalItems: this.totalRows
-              };    
+            };    
     }
 }
